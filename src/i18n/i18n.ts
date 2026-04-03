@@ -19,9 +19,10 @@ function getLangs() {
 }
 
 // Map Steam language codes (e.g. "schinese") to i18n keys (e.g. "zh")
-function mapSteamLang(steamLang: string): string {
+// Returns undefined if no mapping found
+function mapSteamLang(steamLang: string): string | undefined {
   const map: { [key: string]: string } = languages.steam_language_map as unknown as { [key: string]: string };
-  return map[steamLang] ?? steamLang;
+  return map[steamLang];
 }
 
 /*
