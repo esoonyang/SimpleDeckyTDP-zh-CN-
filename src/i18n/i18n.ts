@@ -18,6 +18,13 @@ function getLangs() {
   return langs;
 }
 
+// Map Steam language codes (e.g. "schinese") to i18n keys (e.g. "zh")
+// Returns undefined if no mapping found
+function mapSteamLang(steamLang: string): string | undefined {
+  const map: { [key: string]: string } = languages.steam_language_map as unknown as { [key: string]: string };
+  return map[steamLang];
+}
+
 /*
 LANGS example:
 
@@ -47,7 +54,9 @@ let cachedLang: string | undefined;
 export const getCurrentLanguage = (): string => {
   if (cachedLang) return cachedLang;
 
-  const lang = window.LocalizationManager.m_rgLocalesToUse[0];
+  const steamLang = window.LocalizationManager.m_rgLocalesToUse[0];
+  // Map Steam language code to i18n key; default to "zh" for this zh-CN fork
+  const lang = mapSteamLang(steamLang) || "zh";
   cachedLang = lang;
   return lang;
 };
